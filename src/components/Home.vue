@@ -25,9 +25,9 @@
         <td>{{ producto.stock }}</td>
         <td>${{ producto.precio }}</td>
         <td>
-          <input class="input" />
+          <input class="input" v-model="stock[index]"/>
           <br />
-          <button class="btn btn-info mt-2" @click="nuevoStock(producto._id)">
+          <button class="btn btn-info mt-2" @click="nuevoStock( producto._id, index )">
             Nuevo Stock
           </button>
         </td>
@@ -43,7 +43,7 @@ export default {
     return {
       productos: [],
       url: "http://localhost:3000/api/productos/",
-      stock: 14
+      stock: []
     };
   },
   mounted() {
@@ -61,23 +61,18 @@ export default {
         console.error("Error en recepción de datos del servidor", error);
       }
     },
-    async nuevoStock(id) {
-      console.log("Nuevo Stock: " + id );
-
+    async nuevoStock(id, index) {
+      console.log("Nuevo Stock id: " + id );
+      let stockNuevo = {stock: this.stock[index]}
+      
       try {
-        let respuesta = await this.axios.put(this.url + id, {
+        let respuesta = await this.axios.put(this.url + id, stockNuevo, {
           "content-type": "application/json",
         });
 
-        let user = respuesta.data;
-        console.log("AXIOS PUT USUARIOS", user);
+        console.log("AXIOS PUT PRODUCTOS", respuesta);
+        this.pedirProductos()
 
-        let index = this.usuarios.findIndex((usuario) => {
-          console.log(usuario.id, user.id);
-          return usuario.id == user.id;
-        });
-        //https://www.w3schools.com/jsref/jsref_splice.asp
-        this.usuarios.splice(index, 1, user);
       } catch (error) {
         console.error(error);
       }
