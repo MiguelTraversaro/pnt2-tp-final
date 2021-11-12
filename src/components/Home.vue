@@ -1,8 +1,8 @@
 <template>
   <div class="table-responsive mt-5">
-    <table class="table container">
+    <table class="table container border border-light">
       <tr class="bg-success text-white">
-        <th></th>
+        <th>Imagen</th>
         <th>Producto</th>
         <th>Stock</th>
         <th>Precio</th>
@@ -14,13 +14,15 @@
         :key="index"
       >
         <td>
-          <img :src="producto.imagen" width="50" :alt="producto.producto" />
+          <img :src="producto.imagen" width="100" class="bg-light" :alt="producto.producto" />
         </td>
         <td>{{ producto.producto }}</td>
         <td>{{ producto.stock }}</td>
         <td>${{ producto.precio }}</td>
         <td>
-          <button class="btn btn-success">Comprar</button>
+          <input class="input">
+          <br>
+          <button class="btn btn-info mt-2" @click="agregarStock(producto._id)">Agregar Stock</button>
         </td>
       </tr>
     </table>
@@ -49,6 +51,14 @@ export default {
         this.productos = productos;
       } catch (error) {
         console.error("Error en recepción de datos del servidor", error);
+      }
+    },
+    async agregarStock(id) {
+      try {
+        this.axios.put(this.url, id, {'content-type':'application/json'})
+
+      } catch (error) {
+        console.error("Error al agregar stock", error);
       }
     },
   },

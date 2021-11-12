@@ -1,5 +1,5 @@
 <template>
-  <footer class="footer fixed-bottom p-2 bg-dark row text-center text-light">
+  <footer class="footer fixed-bottom border-top border-light p-2 bg-dark row text-center text-light">
     <div class="container col">
       <a class="text-light" href="#top">Inicio</a>
     </div>
