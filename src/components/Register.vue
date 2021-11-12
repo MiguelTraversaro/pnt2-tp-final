@@ -25,19 +25,19 @@
     </validate>
 
     <validate tag="div">
-      <label for="contrasenia">Contraseña</label>
+      <label for="password">Contraseña</label>
       <input
         type="text"
-        id="contrasenia"
-        name="contrasenia"
+        id="password"
+        name="password"
         class="form-control"
-        v-model.trim="formData.contrasenia"
+        v-model.trim="formData.password"
         autocomplete="off"
         required
         :minlength="contraseniaMinLength"
         :maxlength="contraseniaMaxLength"
       />
-      <field-messages name="contrasenia" show="$dirty">
+      <field-messages name="password" show="$dirty">
         <div slot="required" class="alert alert-danger mt-1">
           Campo requerido
         </div>
@@ -45,7 +45,7 @@
           Requiere mínimo {{ contraseniaMinLength }} caracteres
         </div>
         <div
-          v-if="formData.contrasenia.length == contraseniaMaxLength"
+          v-if="formData.password.length == contraseniaMaxLength"
           class="alert alert-danger mt-1"
         >
           Máximo {{ contraseniaMaxLength }} caracteres
@@ -218,19 +218,17 @@ export default {
       edadMin: 18,
       edadMax: 130,
       min: this.altura > 0,
-      url: "https://6175e83903178d00173daa13.mockapi.io/clientes",
+      url: "http://localhost:3000/api/users/",
     };
   },
   computed: {},
-  mounted() {
-    
-  },
+  mounted() {},
 
   methods: {
     getInitialData() {
       return {
         email: "",
-        contrasenia: "",
+        password: "",
         nombre: "",
         apellido: "",
         edad: "",
@@ -239,15 +237,18 @@ export default {
       };
     },
 
-    async enviarDatosAlServidor(usuarios) {
+    async enviarDatosAlServidor(usuario) {
       try {
-        let respuesta = await this.axios.post(this.url, usuarios, {
+        console.log(usuario)
+        let respuesta = await this.axios.post(this.url, usuario, {
           "content-type": "application/json",
         });
-        let datosRecibidos = respuesta.data;
+        let datosRecibidos = respuesta;
         console.log("datosRecibidos POST", datosRecibidos);
-        this.pedirDatosAlServidor();
-        alert(`Cuenta creada con exito, bienvenido ${datosRecibidos.nombre} ${datosRecibidos.apellido}`)
+        // this.pedirDatosAlServidor();
+        alert(
+          `Cuenta creada con exito. Bienvenido: ${usuario.nombre} ${usuario.apellido}!`
+        );
         this.$router.push("/");
       } catch (error) {
         console.error("Error en envío de datos del formulario", error);
@@ -266,11 +267,11 @@ export default {
     },
 
     crearCuenta() {
-      let cuenta = { ...this.formData }
-      console.log(cuenta)
-      this.enviarDatosAlServidor(cuenta)
-      this.formData = this.getInitialData()
-      this.formState._reset()
+      let cuenta = { ...this.formData };
+      // console.log(cuenta);
+      this.enviarDatosAlServidor(cuenta);
+      this.formData = this.getInitialData();
+      this.formState._reset();
     },
   },
 };

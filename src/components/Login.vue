@@ -11,13 +11,13 @@
       autofocus=""
       v-model="email"
     />
-    <label for="inputPassword" class="sr-only">Contraseña</label>
+    <label for="password" class="sr-only">Contraseña</label>
     <input
       type="password"
       class="form-control mt-3"
       placeholder="Contraseña"
       required
-      v-model="contrasenia"
+      v-model="password"
     />
     <button class="btn btn-lg btn-primary btn-block mt-3 mb-3" type="submit">
       Ingresar
@@ -34,17 +34,25 @@ export default {
   data(){
     return{
       email: "",
-      contrasenia: "",
+      password: "",
+      url: "http://localhost:3000/api/users/login"
     }
   },
   methods: {
     async ingresar(){
-      const cliente = {
-        email: this.email,
-        contrasenia: this.contrasenia,  
+      try {
+        const cliente = {
+          email: this.email,
+          password: this.password,  
+        }
+        const respuesta = await axios.post(this.url, cliente)
+        console.log(respuesta.data.token)
+        localStorage.setItem("token",respuesta.data.token)
+        this.$router.push("/");
+        console.log(respuesta)
+      } catch (error) {
+        console.log(error)
       }
-      const respuesta = await axios.post("/login", cliente)
-      console.log(respuesta)
     }
   }
 };
