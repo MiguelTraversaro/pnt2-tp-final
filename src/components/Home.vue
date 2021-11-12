@@ -14,15 +14,22 @@
         :key="index"
       >
         <td>
-          <img :src="producto.imagen" width="100" class="bg-light" :alt="producto.producto" />
+          <img
+            :src="producto.imagen"
+            width="100"
+            class="bg-light"
+            :alt="producto.producto"
+          />
         </td>
         <td>{{ producto.producto }}</td>
         <td>{{ producto.stock }}</td>
         <td>${{ producto.precio }}</td>
         <td>
-          <input class="input">
-          <br>
-          <button class="btn btn-info mt-2" @click="agregarStock(producto._id)">Agregar Stock</button>
+          <input class="input" />
+          <br />
+          <button class="btn btn-info mt-2" @click="nuevoStock(producto._id)">
+            Nuevo Stock
+          </button>
         </td>
       </tr>
     </table>
@@ -35,12 +42,13 @@ export default {
   data() {
     return {
       productos: [],
-      url: "http://localhost:3000/api/users/",
+      url: "http://localhost:3000/api/productos/",
+      stock: 14
     };
   },
   mounted() {
     console.log("ApiRestFull -> mounted()");
-    this.pedirProductos()
+    this.pedirProductos();
   },
   methods: {
     async pedirProductos() {
@@ -53,12 +61,25 @@ export default {
         console.error("Error en recepción de datos del servidor", error);
       }
     },
-    async agregarStock(id) {
-      try {
-        this.axios.put(this.url, id, {'content-type':'application/json'})
+    async nuevoStock(id) {
+      console.log("Nuevo Stock: " + id );
 
+      try {
+        let respuesta = await this.axios.put(this.url + id, {
+          "content-type": "application/json",
+        });
+
+        let user = respuesta.data;
+        console.log("AXIOS PUT USUARIOS", user);
+
+        let index = this.usuarios.findIndex((usuario) => {
+          console.log(usuario.id, user.id);
+          return usuario.id == user.id;
+        });
+        //https://www.w3schools.com/jsref/jsref_splice.asp
+        this.usuarios.splice(index, 1, user);
       } catch (error) {
-        console.error("Error al agregar stock", error);
+        console.error(error);
       }
     },
   },
