@@ -10,8 +10,9 @@ import Register from "./components/Register.vue"
 export const router = new VueRouter({
     mode: "history",
     routes: [
-        { path: "/", component: Home},
+        { path: "/", component: Login},
         { path: "/login", component: Login},
         { path: "/register", component: Register},
+        { path: "/home", component: Home},
     ]
 })

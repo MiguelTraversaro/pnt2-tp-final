@@ -245,24 +245,12 @@ export default {
         });
         let datosRecibidos = respuesta;
         console.log("datosRecibidos POST", datosRecibidos);
-        // this.pedirDatosAlServidor();
         alert(
           `Cuenta creada con exito. Bienvenido: ${usuario.nombre} ${usuario.apellido}!`
         );
         this.$router.push("/");
       } catch (error) {
         console.error("Error en envío de datos del formulario", error);
-      }
-    },
-
-    async pedirDatosAlServidor() {
-      try {
-        let respuesta = await this.axios(this.url);
-        let usuarios = respuesta.data;
-        console.log("datos GET", usuarios);
-        this.usuarios = usuarios;
-      } catch (error) {
-        console.error("Error en recepción de datos del servidor", error);
       }
     },
 
