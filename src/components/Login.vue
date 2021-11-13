@@ -2,6 +2,7 @@
   <form @submit.prevent="ingresar" class="form-signin text-center container mt-5 border p-5">
     <img class="mb-4" src="@/assets/logo.png" alt="logo" width="80" height="80" />
     <h1 class="h3 mb-3 font-weight-normal">Por favor, ingrese en su cuenta</h1>
+    <div class="alert alert-danger mt-1" v-show="!ingreso">Datos incorrectos</div>
     <label for="inputEmail" class="sr-only">Email</label>
     <input
       type="email"
@@ -18,6 +19,8 @@
       placeholder="Contraseña"
       required
       v-model="password"
+      :minlength="contraseniaMinLength"
+      :maxlength="contraseniaMaxLength"
     />
     <button class="btn btn-lg btn-primary btn-block mt-3 mb-3" type="submit">
       Ingresar
@@ -35,7 +38,8 @@ export default {
     return{
       email: "",
       password: "",
-      url: "http://localhost:3000/api/users/login"
+      url: "http://localhost:3000/api/users/login",
+      ingreso: true,
     }
   },
   methods: {
@@ -48,10 +52,11 @@ export default {
         const respuesta = await axios.post(this.url, cliente)
         console.log(respuesta.data.token)
         localStorage.setItem("token",respuesta.data.token)
-        this.$router.push("/");
+        this.$router.push("/Home");
         console.log(respuesta)
       } catch (error) {
         console.log(error)
+        this.ingreso = false
       }
     }
   }

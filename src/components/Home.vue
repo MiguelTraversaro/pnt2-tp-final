@@ -6,7 +6,7 @@
         <th>Producto</th>
         <th>Stock</th>
         <th>Precio</th>
-        <th></th>
+        <th>Ingresar Nuevo Stock</th>
       </tr>
       <tr
         class="bg-dark text-white"
@@ -24,12 +24,13 @@
         <td>{{ producto.producto }}</td>
         <td>{{ producto.stock }}</td>
         <td>${{ producto.precio }}</td>
-        <td>
-          <input class="input" v-model="stock[index]" :state="formState"/>
+        <td class="text-center">
+          <input class="input col" v-model="stock[index]" :state="formState"/>
           <br />
-          <button class="btn btn-info mt-2" @click.prevent="nuevoStock( producto._id, index )">
+          <button class="btn btn-info mt-2 col" @click.prevent="nuevoStock( producto._id, index )" v-if="stock[index]>0">
             Nuevo Stock
           </button>
+          <div class="alert alert-danger col p-1 border-0 m-0" v-else v-show="( stock[index]!=null && stock[index]!='' )">Ingresar número positivo</div>
         </td>
       </tr>
     </table>
@@ -45,7 +46,7 @@ export default {
       formState: {},
       productos: [],
       url: "http://localhost:3000/api/productos/",
-      stock: []
+      stock: [],
     };
   },
   mounted() {
