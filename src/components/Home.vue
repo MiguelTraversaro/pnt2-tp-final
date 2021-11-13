@@ -25,9 +25,9 @@
         <td>{{ producto.stock }}</td>
         <td>${{ producto.precio }}</td>
         <td>
-          <input class="input" v-model="stock[index]"/>
+          <input class="input" v-model="stock[index]" :state="formState"/>
           <br />
-          <button class="btn btn-info mt-2" @click="nuevoStock( producto._id, index )">
+          <button class="btn btn-info mt-2" @click.prevent="nuevoStock( producto._id, index )">
             Nuevo Stock
           </button>
         </td>
@@ -41,6 +41,8 @@ export default {
   name: "Home",
   data() {
     return {
+      formData: this.getInitialData(),
+      formState: {},
       productos: [],
       url: "http://localhost:3000/api/productos/",
       stock: []
@@ -51,6 +53,11 @@ export default {
     this.pedirProductos();
   },
   methods: {
+    getInitialData() {
+      return {
+        stock: "",
+      };
+    },
     async pedirProductos() {
       try {
         let respuesta = await this.axios(this.url);
