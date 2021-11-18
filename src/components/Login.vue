@@ -19,8 +19,6 @@
       placeholder="Contraseña"
       required
       v-model="password"
-      :minlength="contraseniaMinLength"
-      :maxlength="contraseniaMaxLength"
     />
     <button class="btn btn-lg btn-primary btn-block mt-3 mb-3" type="submit">
       Ingresar
@@ -50,10 +48,8 @@ export default {
           password: this.password,  
         }
         const respuesta = await axios.post(this.url, cliente)
-        console.log(respuesta)
+        console.log(respuesta.data.token)
         localStorage.setItem("token",respuesta.data.token)
-        console.log(localStorage.getItem("token"))
-        
         this.$router.push("/Home");
         console.log(respuesta)
       } catch (error) {

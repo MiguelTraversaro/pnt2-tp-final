@@ -27,11 +27,11 @@
     <validate tag="div">
       <label for="password">Contraseña</label>
       <input
-        type="text"
+        type="password"
         id="password"
         name="password"
         class="form-control"
-        v-model.trim="formData.password"
+        v-model="formData.password"
         autocomplete="off"
         required
         :minlength="contraseniaMinLength"
@@ -49,7 +49,7 @@
           class="alert alert-danger mt-1"
         >
           Máximo {{ contraseniaMaxLength }} caracteres
-        </div>
+        </div>  
       </field-messages>
     </validate>
 

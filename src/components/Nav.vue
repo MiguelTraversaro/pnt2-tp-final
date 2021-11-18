@@ -21,15 +21,17 @@
           >
         </li>
       </ul>
-      <form class="form-inline my-2 my-lg-0">
+      <form class="form-inline my-2 my-lg-0" @submit.prevent="buscar">
         <input
           class="form-control mr-sm-2"
           type="search"
-          placeholder="Buscar"
+          placeholder="Search"
           aria-label="Search"
+          id="input"
+          autocomplete="off"
         />
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
-          Buscar
+          Search
         </button>
       </form>
       <ul class="navbar-nav">
@@ -51,5 +53,17 @@
 <script>
 export default {
   name: "Nav",
+  data(){
+    return {
+      input: ''
+    }
+  },
+  methods: {
+    buscar() {
+      let texto = document.querySelector('#input').value
+      this.input = texto.toString()
+      this.$store.dispatch('buscarProducto',this.input)
+    }
+  }
 };
 </script>
