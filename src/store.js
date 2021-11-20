@@ -33,7 +33,7 @@ export default new Vuex.Store({
               commit('remove', index)
           },
           comprar({commit}){
-            console.log('Elementos comprados: ' + JSON.stringify(this.state.carrito))
+            console.log('Elementos comprados: ' + this.state.carrito)
             commit('comprar')
         }
     },
@@ -53,7 +53,10 @@ export default new Vuex.Store({
             state.carrito.splice(index, 1)
         },
         comprar(state){
+            console.log(JSON.stringify(state.carrito))
+            const respuesta = axios.post(state.urlProductos+"compra", state.carrito)
             state.carrito.splice(0, state.carrito.length)
+            console.log(respuesta)
         }
     }
 })
