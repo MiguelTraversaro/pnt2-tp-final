@@ -48,8 +48,10 @@ export default {
           password: this.password,  
         }
         const respuesta = await axios.post(this.url, cliente)
-        console.log(respuesta.data.token)
         localStorage.setItem("token",respuesta.data.token)
+        localStorage.setItem("usuario_id",respuesta.data.user._id)
+        localStorage.setItem("usuario_nombre",respuesta.data.user.nombre)
+        localStorage.setItem("usuario_apellido",respuesta.data.user.apellido)
         this.$router.push("/Home");
         console.log(respuesta)
       } catch (error) {

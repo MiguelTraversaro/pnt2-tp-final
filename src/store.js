@@ -53,8 +53,12 @@ export default new Vuex.Store({
             state.carrito.splice(index, 1)
         },
         comprar(state){
-            console.log(JSON.stringify(state.carrito))
-            const respuesta = axios.post(state.urlProductos+"compra", state.carrito)
+            const usuario = {
+                _id: localStorage.getItem("usuario_id"),
+                nombre: localStorage.getItem("usuario_nombre"),
+                apellido: localStorage.getItem("usuario_apellido"),
+            }
+            const respuesta = axios.post(state.urlProductos+"compra", {compras: state.carrito, usuario: usuario})
             state.carrito.splice(0, state.carrito.length)
             console.log(respuesta)
         }
