@@ -34,7 +34,7 @@
           </button>
           <div class="alert alert-danger col p-1 border-0 m-0" v-else v-show="( stock[index]!=null && stock[index]!='' )">Ingresar número positivo</div>
         </td>
-        <td><button class="btn btn-success" @click="agregar(index)" :disabled="!producto.stock > 0">Agregar al carrito</button></td>
+        <td><button class="btn btn-success" @click="agregar(index)" :disabled="!producto.stock>0">Agregar al carrito</button></td>
       </tr>
     </table>
   </div>
@@ -83,8 +83,9 @@ export default {
     agregar(index){
       console.log(index)
       let producto = this.$store.state.productos[index]
+      producto.stock -= 1
       this.$store.dispatch('agregar', producto)
-    }
+    },
   },
 };
 </script>
