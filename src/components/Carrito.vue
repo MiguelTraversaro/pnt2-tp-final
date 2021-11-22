@@ -2,7 +2,7 @@
 
   <section class="src-components-carrito">
     <div class="float-right mr-3 tp-2">
-      <button class="btn btn-success" @click="mostrarCarrito" data-toggle="modal" data-target="#carrito"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="50" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
+      <button :class="clase()" @click="mostrarCarrito" data-toggle="modal" data-target="#carrito"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="50" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
       <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/></svg> 
       ({{ this.$store.state.carrito.length }})</button>
     </div>
@@ -21,12 +21,14 @@
                 <th>Imagen</th>
                 <th>Producto</th>
                 <th>Precio</th>
+                <th>Cantidad</th>
                 <th></th>
               </tr>
               <tr v-for="(producto, index) in this.$store.state.carrito" :key="index">
                 <td><img :src="producto.imagen" width="100" class="bg-light" :alt="producto.producto"></td>
                 <td>{{ producto.producto }}</td>
                 <td>${{ producto.precio }}</td>
+                <td>{{producto.cantidad}}</td>
                 <td><button type="button" class="close" aria-label="Close" @click="eliminar(index)">
                 <span aria-hidden="true">&times;</span></button></td>
               </tr>
@@ -73,7 +75,7 @@
       calcularTotalCarrito(){
         let total = 0
         for(let p of this.$store.state.carrito){
-          total += parseInt(p.precio)
+          total += p.precio * p.cantidad
         }
         return total
       },
@@ -83,6 +85,13 @@
       },
       comprar(){
         this.$store.dispatch("comprar")
+      },
+      clase(){
+        let style = 'btn btn-success'
+        if(this.$store.state.carrito.length == 0){
+          style = 'btn btn-danger'
+        }
+        return style
       }
     },
     computed: {

@@ -47,7 +47,16 @@ export default new Vuex.Store({
             })
         },
         add(state, producto){
-            state.carrito.push(producto)
+            let prod = state.carrito.filter(p => {
+                return p._id == producto._id
+            })
+            console.log('prod', prod)
+            if(prod.length){
+                prod[0].cantidad += 1
+            } else {
+                producto.cantidad = 1
+                state.carrito.push(producto)
+            }
         },
         remove(state, index){
             state.carrito.splice(index, 1)

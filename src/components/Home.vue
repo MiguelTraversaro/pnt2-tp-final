@@ -1,6 +1,6 @@
 <template>
   <div class="table-responsive mt-5">
-    <Carrito/>
+     <Carrito/>
     <table class="table container border border-light">
       <tr class="bg-success text-white">
         <th>Imagen</th>
@@ -34,7 +34,7 @@
           </button>
           <div class="alert alert-danger col p-1 border-0 m-0" v-else v-show="( stock[index]!=null && stock[index]!='' )">Ingresar número positivo</div>
         </td>
-        <td><button class="btn btn-success" @click="agregar(index)">Agregar al carrito</button></td>
+        <td><button class="btn btn-success" @click="agregar(index)" :disabled="!producto.stock > 0">Agregar al carrito</button></td>
       </tr>
     </table>
   </div>
