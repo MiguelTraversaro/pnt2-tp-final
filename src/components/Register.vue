@@ -251,6 +251,7 @@ export default {
         this.$router.push("/");
       } catch (error) {
         console.error("Error en envío de datos del formulario", error);
+        alert(`Cuenta ya existente ${usuario.email}!`);
       }
     },
 
