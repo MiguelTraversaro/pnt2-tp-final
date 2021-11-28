@@ -7,7 +7,7 @@
         <th>Producto</th>
         <th>Stock</th>
         <th>Precio</th>
-        <th>Ingresar Nuevo Stock</th>
+        <th v-if="admin == 'true'">Ingresar Nuevo Stock</th>
         <th></th>
       </tr>
       <tr
@@ -26,7 +26,7 @@
         <td>{{ producto.producto }}</td>
         <td>{{ producto.stock }}</td>
         <td>${{ producto.precio }}</td>
-        <td class="text-center">
+        <td v-show="admin == 'true'" class="text-center">
           <input class="input col" v-model="stock[index]" :state="formState"/>
           <br />
           <button class="btn btn-info mt-2 col" @click.prevent="nuevoStock( producto._id, index )" v-if="stock[index]>0">
@@ -51,7 +51,8 @@ export default {
     return {
       formData: this.getInitialData(),
       formState: {},
-      stock: []
+      stock: [],
+      admin: localStorage.getItem('usuario_admin')
     };
   },
   mounted() {

@@ -52,6 +52,7 @@ export default {
         localStorage.setItem("usuario_id",respuesta.data.user._id)
         localStorage.setItem("usuario_nombre",respuesta.data.user.nombre)
         localStorage.setItem("usuario_apellido",respuesta.data.user.apellido)
+        localStorage.setItem("usuario_admin", respuesta.data.user.esAdmin)
         this.$router.push("/Home");
         console.log(respuesta)
       } catch (error) {
